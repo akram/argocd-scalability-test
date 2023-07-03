@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: $APP
+  namespace: $ARGOCD_NS
+spec:
+  destination:
+    namespace: $APP_NS
+    server: https://kubernetes.default.svc 
+  project: default 
+  source: 
+    path: bubble-animation/application-mainfest
+    repoURL: https://github.com/akram/argocd-scalability-test
+    targetRevision: main
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
+

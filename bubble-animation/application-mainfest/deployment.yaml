@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bubble-animation
+  name: bubble-animation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bubble-animation
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: bubble-animation
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/bgd:1.0.0
+        name: bubble-animation
+        env:
+        - name: COLOR
+          value: "blue"
