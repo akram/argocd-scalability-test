@@ -15,6 +15,8 @@ for i in $(seq -w $TOTAL_NS); do
   ARGOCD_NS=$ARGOCD_SERVERS_PREFIX-$ARGOCD_NS_INDEX
   oc label ns $NS_PREFIX-$i argocd.argoproj.io/managed-by=$ARGOCD_NS &
   APP_NS=$NS_PREFIX-$i
-  APP_NS=$NS_PREFIX-$i APP=$APP_PREFIX-$APP_NS envsubst < argocd-application.yaml | oc apply -n $ARGOCD_NS -f -
+  for j in $(seq -w $APP_PER_NS); do
+    APP_NS=$NS_PREFIX-$i APP=$APP_PREFIX-$j-$APP_NS envsubst < argocd-application.yaml | oc apply -n $ARGOCD_NS -f -
+  done
 done
 
