@@ -1,6 +1,9 @@
 #!/bin/sh
 
 source ./env.sh
+oc apply -f openshift-gitops.yaml
+oc  wait --for=condition=Ready=true -n openshift-gitops pod/openshift-gitops-application-controller-0
+
 
 for i in $(seq -w $ARGOCD_SERVERS_COUNT); do
  oc create ns $ARGOCD_SERVERS_PREFIX-$i
